@@ -47,7 +47,7 @@ t = np.arange(0,len(physical_data)/fs,1/fs) #use physical_data as a template for
 
 # generate plots vs time using function 
 p3m.plot_activities(resting_data, relaxing_data, mental_data, physical_data,t)
-
+plt.savefig('plot_raw_activites.png')
 #%% Part 2: Filter Your Data 
 
 numtaps = 250 # half the sampling frequency 
@@ -81,7 +81,7 @@ plt.title('Filter Frequency Response')
 plt.xlabel('Freq (Hz)')
 plt.ylabel('Amplitude (A.U.)')
 plt.tight_layout()
-
+plt.savefig('filter_impulse_and_freq_response.png')
 # plot before and after of data with filter
 plt.figure(3,clear=True)
 # plot the before
@@ -95,10 +95,8 @@ plt.ylabel('Voltage (mV)')
 plt.subplot(1,2,2)
 p3m.filter_data(resting_data,signal_filter)
 plt.tight_layout()
+plt.savefig('filtered_vs_unfiltered_data.png')
 
-
-# filter and plot all data  
-plt.figure(4,clear=True)
 # filter and plot resting_data
 plt.figure(4,clear=True)
 plt.subplot(2,2,1)
@@ -116,6 +114,7 @@ filtered_mental = p3m.filter_data(mental_data,signal_filter,'Mental ')
 plt.subplot(2,2,4)
 filtered_physical = p3m.filter_data(physical_data,signal_filter,'Physical ')
 
+plt.savefig('plot_filtered_data.png')
 #%% Part 3: Detect Heartbeats
 
 # create figure of plots with heartbeats detected 
@@ -141,6 +140,7 @@ plt.subplot(2,2,4)
 p3m.detect_heartbeat(filtered_physical, numtaps, 'Physical ')
 plt.xlim(250,255)
 
+plt.savefig('plot_detected_beats.png')
 #%% part 4: Heart Rate Variability
 
 #get times for all heartbeats for every activity
@@ -158,6 +158,7 @@ p3m.calculate_hrv_plot(physical_heartbeat_times, 'Physical')
 p3m.calculate_hrv_plot(rest_heartbeat_times, 'Resting')
 p3m.calculate_hrv_plot(relax_heartbeat_times, 'Relaxing')
 
+plt.savefig('HRV_barplot.png')
 #assign dt for x-axes
 dt= 0.1
 
@@ -204,6 +205,7 @@ plt.subplot(2,2,4)
 plt.title('Physical Power Spectrum')
 ibi_physical_power, avg_physical_lf, avg_physical_hf = p3m.get_power_spectrum(ibi_physical, resolution)
 plt.tight_layout()
+plt.savefig('Power_spectrum.png')
 
 #create new figure
 plt.figure(9,clear=True)
@@ -224,3 +226,4 @@ physical_ratio = avg_physical_lf/avg_physical_hf
 plt.bar('Physically Active', physical_ratio, color='firebrick')
 
 plt.tight_layout()
+plt.savefig('LF_HF_ratio_barplot.png')
